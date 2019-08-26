@@ -1,28 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { createStore } from 'redux'
+import Counter from './Day2/counter'
 
-function App() {
-  let fistname = 'ract'
-  console.log(fistname)
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+function x(firstname = 'react', action) {
+  switch (action.type) {
+    case 'INCREMENT':
+      return "demo1"
+    case 'DECREMENT':
+      return 'demo2'
+    default:
+      return firstname
+  }
 }
 
-export default App;
+const namestore = createStore(x)
+
+const reInitialzeMyApp = () => ReactDOM.render(
+  <Counter
+    value={namestore.getState()}
+    onIncrement={() => namestore.dispatch({ type: 'INCREMENT' })}
+    onDecrement={() => namestore.dispatch({ type: 'DECREMENT' })}
+  />,
+  document.getElementById('root')
+)
+reInitialzeMyApp()
+// render()
+namestore.subscribe(reInitialzeMyApp)
